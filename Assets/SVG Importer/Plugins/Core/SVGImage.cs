@@ -25,7 +25,7 @@ namespace SVGImporter
 
         [FormerlySerializedAs("vectorGraphics")]
         [SerializeField]
-        protected SVGAsset _vectorGraphics;
+        protected SVGAsset _vectorGraphics = default;
         protected SVGAsset _lastVectorGraphics;
         public SVGAsset vectorGraphics
         {
@@ -351,9 +351,19 @@ namespace SVGImporter
         
         protected override void OnPopulateMesh(VertexHelper vh)
         {
-            if (canvas == null) return;
-            if (sharedMesh == null) { base.OnPopulateMesh(vh); return; }
+            if(sharedMesh == null)
+            {
+                base.OnPopulateMesh(vh); 
+                return;
+            }
+
+            if(vh == null || canvas==null || _vectorGraphics==null)
+            {
+                return;
+            }
+
             vh.Clear();
+
             Mesh mesh = sharedMesh;
             tempVBOLength = mesh.vertexCount;
 
@@ -363,9 +373,12 @@ namespace SVGImporter
             uv2 = mesh.uv2;
             colors = mesh.colors32;
             normals = mesh.normals;
-            
-            if(vertexStream == null || vertexStream.Length != tempVBOLength) vertexStream = new UIVertex[tempVBOLength];
-            
+
+            if(vertexStream == null || vertexStream.Length != tempVBOLength)
+            {
+                vertexStream = new UIVertex[tempVBOLength];
+            }
+
             if (_vectorGraphics.antialiasing || _vectorGraphics.generateNormals)
             {
                 canvas.additionalShaderChannels = AdditionalCanvasShaderChannels.TexCoord1 | AdditionalCanvasShaderChannels.TexCoord2 | AdditionalCanvasShaderChannels.Normal;

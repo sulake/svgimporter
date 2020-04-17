@@ -9,6 +9,8 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEditor;
 
+#pragma warning disable 0649
+
 namespace SVGImporter
 {
 	internal class SVGUtilityWindow : EditorWindow

@@ -5,6 +5,7 @@
 sampler2D _GradientColor;
 sampler2D _GradientShape;
 float4 _Params;
+float4 _GradientColor_TexelSize;
 
 float4 _ClipRect;
 fixed4 _TextureSampleAdd;
@@ -87,7 +88,9 @@ half4 fragmentGradientsOpaque(vertex_output i) : COLOR
 
 half4 fragmentGradientsAlphaBlended(vertex_output i) : COLOR
 {
-	float gradient = dot(tex2D(_GradientShape, i.uv0), i.uv1) ;
+    float colorW = _Params.z / _Params.x;
+    float d = min((dot(tex2D(_GradientShape, i.uv0.xy), i.uv1.xy)), colorW);
+    float gradient = d * (1.0 - _GradientColor_TexelSize.x/colorW); //ensure the correct width (1 on px)
 	float2 gradientColorUV = float2(i.uv0.z + gradient, i.uv0.w);
 	half4 output = (tex2D(_GradientColor, gradientColorUV) + _TextureSampleAdd) * i.color;
 	

@@ -16,6 +16,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text.RegularExpressions;
 using System.IO;
 
+#pragma warning disable 0618
 
 namespace SVGImporter
 {

@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
+#pragma warning disable 0649
+
 namespace SVGImporter.Rendering
 {
     using Utils;
@@ -267,7 +269,7 @@ namespace SVGImporter.Rendering
                     }
                 }
 
-                if (type == EventType.mouseDrag)
+                if (type == EventType.MouseDrag)
                 {
                     OnMouseDrag(vrTrs);
                     GUI.changed = true;
@@ -275,7 +277,7 @@ namespace SVGImporter.Rendering
                 }
 
                 // Cancel Operation
-                if (Event.current.type == EventType.keyDown && Event.current.keyCode == KeyCode.Escape)
+                if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Escape)
                 {
                     vrTrs.SetTransform(origVrTransform);
                     Reset();
@@ -285,7 +287,7 @@ namespace SVGImporter.Rendering
                 }
             }
 
-            if (type == EventType.repaint)
+            if (type == EventType.Repaint)
             {
                 RenderTransformationGizmos(vrTrs);
             }
@@ -519,6 +521,7 @@ namespace SVGImporter.Rendering
             }
         }
 
+#pragma warning disable 0618
         protected static void RenderTransformationGizmos(SVGTransform2D selectionTransform)
         {
             Handles.color = COLOR_SELECTED;
@@ -678,5 +681,6 @@ namespace SVGImporter.Rendering
             Handles.Label(p3, "   p3");
             */
         }
+#pragma warning restore 0618
     }
 }
